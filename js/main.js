@@ -43,8 +43,9 @@
 
   /* ── Scroll-reveal animation ── */
   const revealEls = document.querySelectorAll('[data-reveal]');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if ('IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window && !prefersReducedMotion) {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {

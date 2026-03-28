@@ -24,7 +24,10 @@
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { font-size: 16px; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   background: var(--bg);
   color: var(--text);
@@ -80,6 +83,9 @@ section { padding: 6rem 0; }
 [data-reveal][data-delay="2"] { transition-delay: 0.2s; }
 [data-reveal][data-delay="3"] { transition-delay: 0.3s; }
 [data-reveal][data-delay="4"] { transition-delay: 0.4s; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
 
 /* ══════════════════════════════════════════
    NAVIGATION
@@ -169,6 +175,7 @@ section { padding: 6rem 0; }
    HERO
 ══════════════════════════════════════════ */
 #hero {
+  min-height: 100vh;
   min-height: 100svh;
   display: flex;
   align-items: center;
