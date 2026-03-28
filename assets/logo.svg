@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <!-- Navy radial gradient background -->
+    <radialGradient id="bg" cx="50%" cy="44%" r="56%">
+      <stop offset="0%"   stop-color="#1c2348"/>
+      <stop offset="60%"  stop-color="#0d1128"/>
+      <stop offset="100%" stop-color="#050609"/>
+    </radialGradient>
+    <!-- White-to-silver gradient for text / logo mark -->
+    <linearGradient id="lg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="55%"  stop-color="#e6e9f4"/>
+      <stop offset="100%" stop-color="#7a8caa"/>
+    </linearGradient>
+    <!-- Slightly darker variant for depth on the animal head -->
+    <linearGradient id="lg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#e8ecf8"/>
+      <stop offset="100%" stop-color="#5a6a88"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="500" height="500" fill="url(#bg)"/>
+
+  <!-- ══════════════════════════════════════
+       7 K 7  –  drawn as paths so we
+       control the exact bold-italic shapes
+  ══════════════════════════════════════ -->
+
+  <!-- LEFT "7" -->
+  <path fill="url(#lg)" d="
+    M 48,145 L 148,145 L 148,170
+    L 95,320 L 68,320
+    L 118,170 L 48,170 Z
+  "/>
+
+  <!-- "K" – vertical bar + two diagonal strokes -->
+  <!-- Vertical bar of K -->
+  <path fill="url(#lg)" d="
+    M 158,145 L 185,145 L 185,320 L 158,320 Z
+  "/>
+  <!-- Upper diagonal of K (top-right stroke) -->
+  <path fill="url(#lg)" d="
+    M 187,145 L 217,145 L 268,228 L 242,228 Z
+  "/>
+  <!-- Lower diagonal of K (bottom-right stroke) -->
+  <path fill="url(#lg)" d="
+    M 242,252 L 268,252 L 218,320 L 188,320 Z
+  "/>
+
+  <!-- RIGHT "7" -->
+  <path fill="url(#lg)" d="
+    M 278,145 L 378,145 L 378,170
+    L 325,320 L 298,320
+    L 348,170 L 278,170 Z
+  "/>
+
+  <!-- ══════════════════════════════════════
+       IBEX / GOAT HEAD  –  centred on the K
+       junction (~255, 240)
+  ══════════════════════════════════════ -->
+  <g fill="url(#lg2)" transform="translate(252,240)">
+
+    <!-- Left horn: sweeps up and curves backward -->
+    <path d="
+      M -8,-72
+      C -18,-90 -35,-110 -42,-130
+      C -48,-148 -44,-162 -34,-158
+      C -26,-155 -22,-138 -18,-118
+      C -14,-100 -10,-84 -6,-68
+      Z
+    "/>
+
+    <!-- Right horn: same sweep -->
+    <path d="
+      M 12,-70
+      C 20,-88 34,-108 40,-130
+      C 46,-150 42,-164 32,-160
+      C 23,-157 20,-140 16,-120
+      C 12,-101 8,-84 4,-67
+      Z
+    "/>
+
+    <!-- Head body – roughly egg-shaped -->
+    <ellipse cx="2" cy="8" rx="34" ry="46"/>
+
+    <!-- Muzzle bump -->
+    <ellipse cx="6" cy="42" rx="20" ry="14"/>
+
+    <!-- Ear left -->
+    <ellipse cx="-30" cy="-25" rx="9" ry="14" transform="rotate(20,-30,-25)"/>
+
+    <!-- Ear right -->
+    <ellipse cx="32" cy="-28" rx="9" ry="14" transform="rotate(-20,32,-28)"/>
+
+    <!-- Eye (dark cutout so it reads against white face) -->
+    <circle cx="12" cy="-2" r="6" fill="#0a0c18"/>
+
+    <!-- Mane lines flowing behind head -->
+    <path fill="none" stroke="url(#lg2)" stroke-width="2.5" stroke-linecap="round" d="
+      M -34,-10 C -52,-5 -60,20 -52,38
+    "/>
+    <path fill="none" stroke="url(#lg2)" stroke-width="2" stroke-linecap="round" d="
+      M -34,5  C -55,14 -60,38 -48,52
+    "/>
+  </g>
+</svg>

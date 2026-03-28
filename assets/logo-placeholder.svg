@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect width="200" height="60" fill="none"/>
+  <rect x="1" y="1" width="198" height="58" rx="4" ry="4" fill="none" stroke="#c9a84c" stroke-width="1" stroke-dasharray="6,3" opacity="0.6"/>
+  <text x="100" y="28" font-family="sans-serif" font-size="10" fill="#c9a84c" text-anchor="middle" opacity="0.7" letter-spacing="2">LOGO</text>
+  <text x="100" y="44" font-family="sans-serif" font-size="8" fill="#c9a84c" text-anchor="middle" opacity="0.45" letter-spacing="1">PLACEHOLDER</text>
+</svg>
