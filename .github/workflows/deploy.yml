@@ -1,0 +1,87 @@
+name: Production Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy Infrastructure & Site
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: infra/requirements.txt
+
+      - name: Set up Node.js (for CDK CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install CDK CLI
+        run: npm install -g aws-cdk
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: CDK Deploy
+        run: |
+          cdk deploy --require-approval never \
+            --outputs-file cdk-outputs.json
+
+      - name: Parse CDK outputs
+        id: cdk_outputs
+        run: |
+          BUCKET_NAME=$(jq -r '.SevenK7StaticSite.BucketName' cdk-outputs.json)
+          DISTRIBUTION_ID=$(jq -r '.SevenK7StaticSite.DistributionId' cdk-outputs.json)
+          if [[ -z "${BUCKET_NAME}" || "${BUCKET_NAME}" == "null" ]]; then
+            echo "ERROR: BucketName not found in CDK outputs" >&2
+            exit 1
+          fi
+          if [[ -z "${DISTRIBUTION_ID}" || "${DISTRIBUTION_ID}" == "null" ]]; then
+            echo "ERROR: DistributionId not found in CDK outputs" >&2
+            exit 1
+          fi
+          echo "bucket_name=${BUCKET_NAME}" >> "$GITHUB_OUTPUT"
+          echo "distribution_id=${DISTRIBUTION_ID}" >> "$GITHUB_OUTPUT"
+
+      - name: Sync static files to S3
+        working-directory: ${{ github.workspace }}
+        run: |
+          aws s3 sync . s3://${{ steps.cdk_outputs.outputs.bucket_name }} --delete \
+            --exclude "infra/*" \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "CNAME" \
+            --exclude "README.md" \
+            --exclude ".nojekyll" \
+            --exclude "cdk.json"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.cdk_outputs.outputs.distribution_id }} \
+            --paths "/*"
+
+      - name: Smoke test
+        run: curl -sf ${{ vars.SITE_URL || 'https://7k7.synthesis.run' }}
