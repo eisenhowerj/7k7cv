@@ -21,12 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.11"
-          cache: pip
-          cache-dependency-path: infra/requirements.txt
 
       - name: Set up Node.js (for CDK CLI)
         uses: actions/setup-node@v4
@@ -37,10 +35,10 @@ jobs:
         run: npm install -g aws-cdk
 
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --no-dev --frozen
 
       - name: CDK Synth
-        run: cdk synth
+        run: uv run cdk synth
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -52,7 +50,7 @@ jobs:
         id: cdk_diff
         run: |
           set +e
-          DIFF_OUTPUT=$(cdk diff 2>&1)
+          DIFF_OUTPUT=$(uv run cdk diff 2>&1)
           DIFF_EXIT=$?
           set -e
           echo "diff_output<<DIFF_EOF" >> "$GITHUB_OUTPUT"
