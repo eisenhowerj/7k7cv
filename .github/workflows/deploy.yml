@@ -44,7 +44,7 @@ jobs:
 
       - name: CDK Deploy
         run: |
-          uv run cdk deploy --require-approval never \
+          uv run cdk deploy SevenK7StaticSite --require-approval never \
             --outputs-file cdk-outputs.json
 
       - name: Parse CDK outputs
