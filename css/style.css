@@ -88,6 +88,10 @@ section { padding: 6rem 0; }
 [data-reveal][data-delay="4"] { transition-delay: 0.4s; }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
+  h1, h2, h3 { animation: none; }
+  .hero-logo img, .nav-logo img { animation: none; }
+  .skill-card-icon { animation: none; }
+  body { cursor: auto; }
 }
 
 /* ══════════════════════════════════════════
