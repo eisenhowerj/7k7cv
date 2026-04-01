@@ -26,24 +26,16 @@ The CDK stacks live in the `infra/` directory:
 | `SevenK7GitHubOidc` | OIDC identity provider + IAM roles for GitHub Actions |
 | `SevenK7StaticSite` | S3 bucket, CloudFront distribution, ACM certificate, optional Route 53 record |
 
-#### CDK context keys
+#### CDK parameters (infra/config.toml)
 
 | Key | Required | Description |
 |---|---|---|
 | `domain_name` | Yes (default: `7k7.synthesis.run`) | Custom domain for the site |
 | `hosted_zone_id` | No | Route 53 hosted-zone ID — enables automatic cert creation and DNS alias record |
-| `certificate_arn` | No | ARN of a pre-validated ACM certificate in `us-east-1` — used when DNS is managed externally |
+| `hosted_zone_name` | No (default: `domain_name`) | Route 53 zone name; set to apex/parent zone when domain is a subdomain (e.g. `synthesis.run`) |
 
-#### Deploying with an external DNS certificate
-
-1. Request an ACM certificate in `us-east-1` for `7k7.synthesis.run`
-2. Add the CNAME validation record to your DNS provider and wait for validation
-3. Deploy:
-   ```bash
-   cd infra
-   cdk deploy -c certificate_arn=<arn>
-   ```
-4. Point your DNS CNAME/ALIAS to the `DistributionDomainName` output value
+Store these values in `infra/config.toml` under the `[cdk]` table.
+Command-line `cdk deploy -c key=value` still works and overrides file values.
 
 ## Replacing the logo
 
@@ -72,5 +64,6 @@ js/main.js              # Interactions (nav, scroll reveal, smooth scroll)
 assets/logo.svg         # 7K7 ibex logo mark (replace with final asset)
 assets/logo-placeholder.svg  # Original placeholder (can be deleted)
 infra/                  # AWS CDK infrastructure (Python)
+infra/config.toml       # Deployment parameters loaded by app.py
 .github/workflows/      # GitHub Actions (deploy on push to main, diff on PR)
 ```

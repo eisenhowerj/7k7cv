@@ -1,0 +1,9 @@
+[cdk]
+# AWS account and deployment region for both stacks.
+# account = "123456789012"
+region = "us-east-1"
+
+# Static site domain configuration.
+domain_name = "7k7.synthesis.run"
+hosted_zone_id = "Z02209873QQLTPWD4UG1V"
+hosted_zone_name = "synthesis.run"
