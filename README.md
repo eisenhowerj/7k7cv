@@ -1,6 +1,6 @@
 # 7K7 — Cinematic AI Artist Portfolio
 
-A clean, cinematic single-page GitHub Pages website for a cinematic AI artist's curriculum vitae and portfolio.
+A clean, cinematic single-page website for a cinematic AI artist's curriculum vitae and portfolio, hosted on AWS S3 + CloudFront.
 
 ## Features
 
@@ -9,15 +9,41 @@ A clean, cinematic single-page GitHub Pages website for a cinematic AI artist's 
 - **Typography** — Cormorant Garamond (headings) + Inter (body) + Space Mono (labels/code)
 - **Scroll animations** — IntersectionObserver reveal, respects `prefers-reduced-motion`
 - **Fully responsive** — mobile hamburger nav, fluid grid, accessible markup
-- **Static** — no build step, pure HTML / CSS / JS, works on GitHub Pages out of the box
+- **Static** — no build step, pure HTML / CSS / JS
 
-## Enabling GitHub Pages
+## Hosting
 
-1. Merge this PR into `main`
-2. Go to **Settings → Pages** in this repository
-3. Under **Source**, select **Deploy from a branch**
-4. Choose `main` branch, folder `/` (root), then click **Save**
-5. Your site will be live at `https://eisenhowerj.github.io/7k7cv/` within a minute
+The site is hosted on **AWS S3 + CloudFront** at `https://7k7.synthesis.run`.
+
+Automated deploys run via GitHub Actions: every push to `main` runs `cdk deploy` and syncs static assets to S3, then invalidates the CloudFront cache.
+
+### Infrastructure (CDK)
+
+The CDK stacks live in the `infra/` directory:
+
+| Stack | Purpose |
+|---|---|
+| `SevenK7GitHubOidc` | OIDC identity provider + IAM roles for GitHub Actions |
+| `SevenK7StaticSite` | S3 bucket, CloudFront distribution, ACM certificate, optional Route 53 record |
+
+#### CDK context keys
+
+| Key | Required | Description |
+|---|---|---|
+| `domain_name` | Yes (default: `7k7.synthesis.run`) | Custom domain for the site |
+| `hosted_zone_id` | No | Route 53 hosted-zone ID — enables automatic cert creation and DNS alias record |
+| `certificate_arn` | No | ARN of a pre-validated ACM certificate in `us-east-1` — used when DNS is managed externally |
+
+#### Deploying with an external DNS certificate
+
+1. Request an ACM certificate in `us-east-1` for `7k7.synthesis.run`
+2. Add the CNAME validation record to your DNS provider and wait for validation
+3. Deploy:
+   ```bash
+   cd infra
+   cdk deploy -c certificate_arn=<arn>
+   ```
+4. Point your DNS CNAME/ALIAS to the `DistributionDomainName` output value
 
 ## Replacing the logo
 
@@ -45,5 +71,6 @@ css/style.css           # All styles
 js/main.js              # Interactions (nav, scroll reveal, smooth scroll)
 assets/logo.svg         # 7K7 ibex logo mark (replace with final asset)
 assets/logo-placeholder.svg  # Original placeholder (can be deleted)
-.nojekyll               # Tells GitHub Pages to skip Jekyll processing
+infra/                  # AWS CDK infrastructure (Python)
+.github/workflows/      # GitHub Actions (deploy on push to main, diff on PR)
 ```
