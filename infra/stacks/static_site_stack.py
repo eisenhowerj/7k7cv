@@ -29,6 +29,10 @@ class StaticSiteStack(Stack):
                            automatically.  The stack must be deployed in
                            ``us-east-1`` so that the certificate is co-located
                            with CloudFront.
+    certificate_arn : str – ARN of a pre-validated ACM certificate in
+                            ``us-east-1`` (optional, used when the domain is
+                            managed by external DNS).  Takes effect only when
+                            ``hosted_zone_id`` is not provided.
     """
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs: object) -> None:
@@ -36,6 +40,7 @@ class StaticSiteStack(Stack):
 
         domain_name: str = self.node.try_get_context("domain_name") or "7k7.synthesis.run"
         hosted_zone_id: str | None = self.node.try_get_context("hosted_zone_id")
+        certificate_arn: str | None = self.node.try_get_context("certificate_arn")
 
         # ── S3 bucket ────────────────────────────────────────────────────────
         bucket = s3.Bucket(
@@ -50,6 +55,11 @@ class StaticSiteStack(Stack):
         )
 
         # ── ACM certificate (must be in us-east-1 for CloudFront) ───────────
+        # Two supported paths:
+        #   1. hosted_zone_id — Route 53 managed: CDK creates & auto-validates the cert.
+        #   2. certificate_arn — External DNS: import a pre-validated ACM cert by ARN.
+        #      Create the cert manually (console / CLI), complete DNS validation, then
+        #      pass the ARN via: cdk deploy -c certificate_arn=<arn>
         certificate: acm.ICertificate | None = None
         hosted_zone: route53.IHostedZone | None = None
         if hosted_zone_id:
@@ -64,6 +74,12 @@ class StaticSiteStack(Stack):
                 "SiteCertificate",
                 domain_name=domain_name,
                 validation=acm.CertificateValidation.from_dns(hosted_zone),
+            )
+        elif certificate_arn:
+            certificate = acm.Certificate.from_certificate_arn(
+                self,
+                "SiteCertificate",
+                certificate_arn,
             )
 
         # ── S3 origin with Origin Access Control (OAC) ──────────────────────
@@ -165,3 +181,11 @@ class StaticSiteStack(Stack):
             description="CloudFront domain name (use for manual DNS if Route 53 is not managed here)",
             export_name=f"{construct_id}-DistributionDomainName",
         )
+        if certificate:
+            CfnOutput(
+                self,
+                "CertificateArn",
+                value=certificate.certificate_arn,
+                description="ACM certificate ARN attached to the CloudFront distribution",
+                export_name=f"{construct_id}-CertificateArn",
+            )
