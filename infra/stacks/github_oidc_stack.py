@@ -94,7 +94,16 @@ class GitHubOidcStack(Stack):
             max_session_duration=cdk.Duration.hours(1),
         )
 
-        # CloudFormation — scoped to SevenK7* stacks and the CDK bootstrap stack
+        # CloudFormation — list actions require account-wide wildcard resource
+        deploy_role.add_to_policy(
+            iam.PolicyStatement(
+                sid="CloudFormationList",
+                actions=["cloudformation:ListStacks"],
+                resources=["*"],
+            )
+        )
+
+        # CloudFormation — stack-scoped management actions
         deploy_role.add_to_policy(
             iam.PolicyStatement(
                 sid="CloudFormationDeploy",
@@ -108,7 +117,6 @@ class GitHubOidcStack(Stack):
                     "cloudformation:GetTemplate",
                     "cloudformation:GetTemplateSummary",
                     "cloudformation:ValidateTemplate",
-                    "cloudformation:ListStacks",
                     "cloudformation:ListStackResources",
                     "cloudformation:SetStackPolicy",
                     "cloudformation:CreateChangeSet",
@@ -234,14 +242,29 @@ class GitHubOidcStack(Stack):
             )
         )
 
-        # STS — identity check and CDK assume-role
+        # STS — identity check (requires wildcard) and CDK assume-role (scoped to cdk-* roles)
         deploy_role.add_to_policy(
             iam.PolicyStatement(
-                sid="StsDeploy",
-                actions=[
-                    "sts:AssumeRole",
-                    "sts:GetCallerIdentity",
+                sid="StsGetCallerIdentity",
+                actions=["sts:GetCallerIdentity"],
+                resources=["*"],
+            )
+        )
+        deploy_role.add_to_policy(
+            iam.PolicyStatement(
+                sid="StsAssumeRoleCdk",
+                actions=["sts:AssumeRole"],
+                resources=[
+                    "arn:aws:iam::*:role/cdk-*",
                 ],
+            )
+        )
+
+        # IAM — list actions require account-wide wildcard resource
+        deploy_role.add_to_policy(
+            iam.PolicyStatement(
+                sid="IamList",
+                actions=["iam:ListRoles"],
                 resources=["*"],
             )
         )
@@ -254,7 +277,6 @@ class GitHubOidcStack(Stack):
                     "iam:CreateRole",
                     "iam:DeleteRole",
                     "iam:GetRole",
-                    "iam:ListRoles",
                     "iam:PassRole",
                     "iam:AttachRolePolicy",
                     "iam:DetachRolePolicy",
@@ -297,6 +319,15 @@ class GitHubOidcStack(Stack):
             max_session_duration=cdk.Duration.hours(1),
         )
 
+        # CloudFormation — list actions require account-wide wildcard resource
+        readonly_role.add_to_policy(
+            iam.PolicyStatement(
+                sid="ReadonlyCloudFormationList",
+                actions=["cloudformation:ListStacks"],
+                resources=["*"],
+            )
+        )
+
         readonly_role.add_to_policy(
             iam.PolicyStatement(
                 sid="ReadonlyCdkDiff",
@@ -306,7 +337,6 @@ class GitHubOidcStack(Stack):
                     "cloudformation:DescribeStackResources",
                     "cloudformation:DescribeStackEvents",
                     "cloudformation:GetTemplate",
-                    "cloudformation:ListStacks",
                     "cloudformation:ListStackResources",
                     "cloudformation:GetStackPolicy",
                 ],
@@ -389,12 +419,20 @@ class GitHubOidcStack(Stack):
             )
         )
 
+        # IAM — list actions require account-wide wildcard resource
+        readonly_role.add_to_policy(
+            iam.PolicyStatement(
+                sid="ReadonlyIamList",
+                actions=["iam:ListRoles"],
+                resources=["*"],
+            )
+        )
+
         readonly_role.add_to_policy(
             iam.PolicyStatement(
                 sid="ReadonlyIam",
                 actions=[
                     "iam:GetRole",
-                    "iam:ListRoles",
                     "iam:GetPolicy",
                     "iam:GetPolicyVersion",
                     "iam:ListPolicyVersions",

@@ -13,7 +13,7 @@ env = cdk.Environment(
 )
 
 # Bootstrap stack: OIDC provider + GitHub Actions IAM roles.
-# Deploy this once per account/region before the first site deploy.
+# Deploy this once per account (in a single chosen region) before the first site deploy.
 GitHubOidcStack(app, "SevenK7GitHubOidc", env=env)
 
 StaticSiteStack(app, "SevenK7StaticSite", env=env)
