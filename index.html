@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cinematic AI Artist — Portfolio. Exploring the intersection of artificial intelligence and visual storytelling." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cinematic AI Artist — Portfolio. Exploring the intersection of artificial intelligence and visual storytelling.">
 
   <title>7K7 — Cinematic AI Artist</title>
 
   <!-- Preconnect for fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=Space+Mono:wght@400&display=swap"
     rel="stylesheet"
-  />
+  >
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <!-- ═══════════════════════════════════
        NAVIGATION
   ═══════════════════════════════════ -->
-  <nav id="navbar" role="navigation" aria-label="Main navigation">
+  <nav id="navbar" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="#hero" class="nav-logo" aria-label="Home">
-        <img src="assets/7k7.jpg" alt="7K7 Logo" width="44" height="44" />
+        <img src="assets/7k7.jpg" alt="7K7 Logo" width="44" height="44">
       </a>
 
-      <button id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+      <button type="button" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
 
-      <ul class="nav-links" id="nav-links" role="list">
+      <ul class="nav-links" id="nav-links">
         <li><a href="#skills">Skills</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -48,7 +48,7 @@
       <div class="hero-content">
         <p class="hero-eyebrow" data-reveal>Cinematic &nbsp;·&nbsp; AI &nbsp;·&nbsp; Art</p>
         <div class="hero-logo" data-reveal data-delay="1">
-          <img src="assets/7k7.jpg" alt="7K7" width="160" height="160" />
+          <img src="assets/7k7.jpg" alt="7K7" width="160" height="160">
         </div>
         <h1 class="hero-name" data-reveal data-delay="2">
           Where <em>vision</em><br>meets&nbsp;intelligence.
@@ -84,7 +84,7 @@
         <div class="skill-card" data-reveal data-delay="1">
           <div class="skill-card-icon">◈</div>
           <h3 class="skill-card-title">Generative Image &amp; Video</h3>
-          <p style="color:var(--text-muted);font-size:0.9rem;">
+          <p class="skill-card-desc">
             Creating high-fidelity, narrative-driven imagery using the latest generative AI models,
             from concept art to final output.
           </p>
@@ -100,7 +100,7 @@
         <div class="skill-card" data-reveal data-delay="2">
           <div class="skill-card-icon">◇</div>
           <h3 class="skill-card-title">Cinematography &amp; Direction</h3>
-          <p style="color:var(--text-muted);font-size:0.9rem;">
+          <p class="skill-card-desc">
             Translating cinematic language — composition, lighting, color grading — into AI-native workflows
             that preserve intention.
           </p>
@@ -115,7 +115,7 @@
         <div class="skill-card" data-reveal data-delay="3">
           <div class="skill-card-icon">◉</div>
           <h3 class="skill-card-title">3D &amp; Real-Time Environments</h3>
-          <p style="color:var(--text-muted);font-size:0.9rem;">
+          <p class="skill-card-desc">
             Building immersive worlds through real-time rendering and 3D simulation, integrated
             with AI-driven procedural generation.
           </p>
@@ -130,7 +130,7 @@
         <div class="skill-card" data-reveal data-delay="4">
           <div class="skill-card-icon">◎</div>
           <h3 class="skill-card-title">Creative Strategy &amp; Direction</h3>
-          <p style="color:var(--text-muted);font-size:0.9rem;">
+          <p class="skill-card-desc">
             Guiding teams and clients from initial concept through delivery — art direction,
             storyboarding, and cross-disciplinary production management.
           </p>
@@ -145,7 +145,7 @@
         <div class="skill-card" data-reveal data-delay="5">
           <div class="skill-card-icon">♪</div>
           <h3 class="skill-card-title">Music &amp; Sound</h3>
-          <p style="color:var(--text-muted);font-size:0.9rem;">
+          <p class="skill-card-desc">
             Multi-instrumentalist musician and former drum and bass artist, bringing a deep
             understanding of rhythm, sonic texture, and musical composition to audiovisual work.
           </p>
@@ -175,7 +175,7 @@
     <div class="work-grid" data-reveal data-delay="2">
 
       <a class="work-item" href="https://www.facebook.com/reel/3401156576710907" target="_blank" rel="noopener noreferrer">
-        <div class="work-item-bg" style="background:linear-gradient(135deg,#0e0e18 0%,#1a1040 50%,#2d1b00 100%);background-image:url('assets/music_video.png');background-size:cover;background-position:center top;"></div>
+        <div class="work-item-bg work-item-bg--1"></div>
         <div class="work-item-overlay"></div>
         <div class="work-frame-label">
           <span class="work-frame-icon">▶</span>
@@ -187,7 +187,7 @@
       </a>
 
       <div class="work-item">
-        <div class="work-item-bg" style="background:linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%);"></div>
+        <div class="work-item-bg work-item-bg--2"></div>
         <div class="work-item-overlay"></div>
         <div class="work-frame-label">
           <span class="work-frame-icon">▶</span>
@@ -200,7 +200,7 @@
       </div>
 
       <div class="work-item">
-        <div class="work-item-bg" style="background:linear-gradient(135deg,#0f0a00 0%,#1c1200 50%,#0a0818 100%);"></div>
+        <div class="work-item-bg work-item-bg--3"></div>
         <div class="work-item-overlay"></div>
         <div class="work-frame-label">
           <span class="work-frame-icon">▶</span>
@@ -213,7 +213,7 @@
       </div>
 
       <a class="work-item" href="https://www.youtube.com/watch?v=mveqQZqtYQo" target="_blank" rel="noopener noreferrer">
-        <div class="work-item-bg" style="background:linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%);background-image:url('https://img.youtube.com/vi/mveqQZqtYQo/hqdefault.jpg');background-size:cover;background-position:center;"></div>
+        <div class="work-item-bg work-item-bg--4"></div>
         <div class="work-item-overlay"></div>
         <div class="work-frame-label">
           <span class="work-frame-icon">▶</span>
@@ -225,7 +225,7 @@
       </a>
 
       <div class="work-item">
-        <div class="work-item-bg" style="background:linear-gradient(135deg,#0e0800 0%,#200e08 50%,#080e20 100%);"></div>
+        <div class="work-item-bg work-item-bg--5"></div>
         <div class="work-item-overlay"></div>
         <div class="work-frame-label">
           <span class="work-frame-icon">▶</span>
@@ -238,7 +238,7 @@
       </div>
 
       <div class="work-item">
-        <div class="work-item-bg" style="background:linear-gradient(135deg,#080820 0%,#10182a 50%,#1a0a10 100%);"></div>
+        <div class="work-item-bg work-item-bg--6"></div>
         <div class="work-item-overlay"></div>
         <div class="work-frame-label">
           <span class="work-frame-icon">▶</span>
@@ -289,21 +289,21 @@
         <form class="contact-form" data-reveal data-delay="2" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
           </div>
           <div class="form-group">
             <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Commission / Collaboration / Other" />
+            <input type="text" id="subject" name="subject" placeholder="Commission / Collaboration / Other">
           </div>
           <div class="form-group">
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Tell me about your project…" required></textarea>
           </div>
-          <button type="submit" class="btn" style="align-self:flex-start;">Send Message</button>
+          <button type="submit" class="btn contact-submit">Send Message</button>
         </form>
 
       </div>

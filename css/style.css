@@ -418,6 +418,10 @@ section { padding: 6rem 0; }
   margin-bottom: 0.8rem;
   color: var(--text);
 }
+.skill-card-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
@@ -464,6 +468,22 @@ section { padding: 6rem 0; }
   transition: transform var(--transition);
 }
 .work-item:hover .work-item-bg { transform: scale(1.04); }
+.work-item-bg--1 {
+  background: linear-gradient(135deg,#0e0e18 0%,#1a1040 50%,#2d1b00 100%);
+  background-image: url('../assets/music_video.png');
+  background-size: cover;
+  background-position: center top;
+}
+.work-item-bg--2 { background: linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%); }
+.work-item-bg--3 { background: linear-gradient(135deg,#0f0a00 0%,#1c1200 50%,#0a0818 100%); }
+.work-item-bg--4 {
+  background: linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%);
+  background-image: url('https://img.youtube.com/vi/mveqQZqtYQo/hqdefault.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.work-item-bg--5 { background: linear-gradient(135deg,#0e0800 0%,#200e08 50%,#080e20 100%); }
+.work-item-bg--6 { background: linear-gradient(135deg,#080820 0%,#10182a 50%,#1a0a10 100%); }
 .work-item-overlay {
   position: absolute;
   inset: 0;
@@ -618,6 +638,7 @@ section { padding: 6rem 0; }
 
 /* Contact form */
 .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.contact-submit { align-self: flex-start; }
 .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 .form-group label {
   font-family: var(--font-mono);
