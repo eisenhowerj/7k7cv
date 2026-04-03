@@ -474,7 +474,12 @@ section { padding: 6rem 0; }
   background-size: cover;
   background-position: center top;
 }
-.work-item-bg--2 { background: linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%); }
+.work-item-bg--2 {
+  background: linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%);
+  background-image: url('../assets/meridian_thumbnail.jpg');
+  background-size: cover;
+  background-position: center top;
+}
 .work-item-bg--3 { background: linear-gradient(135deg,#0f0a00 0%,#1c1200 50%,#0a0818 100%); }
 .work-item-bg--4 {
   background: linear-gradient(135deg,#080814 0%,#0d2030 50%,#1a0a30 100%);
